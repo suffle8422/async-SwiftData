@@ -13,7 +13,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
     nonisolated var modelContext: ModelContext { modelContext }
 
     public func get(id: UUID) async throws -> Entity {
-           guard let model = getModel(id: id) else { throw AsyncSwiftDataRepositoryError.notFoundIDError }
+           guard let model = getModel(id: id) else { throw AsyncSwiftDataError.idNotFound }
            return model.makeEntity()
        }
    
@@ -37,7 +37,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
    
        public func delete(id: UUID) async throws {
            guard let model = getModel(id: id) else {
-               throw AsyncSwiftDataRepositoryError.notFoundIDError
+               throw AsyncSwiftDataError.idNotFound
            }
            modelContext.delete(model)
            try saveModelContext()
@@ -56,7 +56,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
                try modelContext.save()
                return
            } catch {
-               throw AsyncSwiftDataRepositoryError.modelContextSaveFailed
+               throw AsyncSwiftDataError.modelContextSaveFailed
            }
        }
 
