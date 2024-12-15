@@ -12,31 +12,23 @@ let package = Package(
 package.products = [
     .library(
         name: "AsyncSwiftData",
-        targets: [.core, .repository]
+        targets: [.targetName]
     )
 ]
 
 package.targets = [
-    .target(name: .core),
-    .target(
-        name: .repository,
-        dependencies: [
-            .target(name: .core)
-        ]
-    ),
+    .target(name: .targetName),
     .testTarget(
-        name: .repositoryTests,
+        name: .testTargetName,
         dependencies: [
-            .target(name: .core),
-            .target(name: .repository)
+            .target(name: .targetName)
         ]
     )
 ]
 
 private extension String {
-    static let core = "AsyncSwiftDataCore"
-    static let repository = "AsyncSwiftDataRepository"
+    static let targetName = "AsyncSwiftData"
 
     // MARK: ForTests
-    static let repositoryTests = "AsyncSwiftDataRepositoryTests"
+    static let testTargetName = "AsyncSwiftDataTests"
 }

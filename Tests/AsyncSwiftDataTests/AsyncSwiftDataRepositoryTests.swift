@@ -8,8 +8,7 @@
 import Foundation
 import Testing
 import SwiftData
-import AsyncSwiftDataCore
-import AsyncSwiftDataRepository
+import AsyncSwiftData
 
 actor AsyncSwiftDataRepositoryTests {
     let modelContainer: ModelContainer

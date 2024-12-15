@@ -7,8 +7,7 @@
 
 import Foundation
 import SwiftData
-import AsyncSwiftDataCore
-import AsyncSwiftDataRepository
+import AsyncSwiftData
 
 @Model
 final class TestModel: IdentifiableModelProtocol {
