@@ -19,8 +19,7 @@ let package = Package(
         .target(
             name: "SomeProduct",
             dependencies: [
-                .product(name: "AsyncSwiftDataCore", package: "async-SwiftData"),
-                .product(name: "AsyncSwiftDataRepository", package: "async-SwiftData")
+                .product(name: "AsyncSwiftData", package: "async-SwiftData")
             ]
         )
     ]
