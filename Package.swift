@@ -11,10 +11,6 @@ let package = Package(
 
 package.products = [
     .library(
-        name: "AsyncSwiftDataCore",
-        targets: [.core]
-    ),
-    .library(
         name: "AsyncSwiftData",
         targets: [.core, .repository]
     )
