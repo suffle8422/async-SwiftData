@@ -28,13 +28,13 @@ package.targets = [
             .target(name: .core)
         ]
     ),
-//    .testTarget(
-//        name: .repositoryTests,
-//        dependencies: [
-//            .target(name: .core),
-//            .target(name: .repository)
-//        ]
-//    )
+    .testTarget(
+        name: .repositoryTests,
+        dependencies: [
+            .target(name: .core),
+            .target(name: .repository)
+        ]
+    )
 ]
 
 private extension String {
