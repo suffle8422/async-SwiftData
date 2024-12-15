@@ -3,7 +3,31 @@
 ## about AsyncSwiftData
 AsyncSwiftDataは、`ModelActor`を利用してSwiftDataの利用をBackgroundThreadで利用するためのライブラリです。
 
-## How to Use
+## Installation
+SwiftPackageManagerよりインストールしてください。
+Package.swiftファイルからインストールする場合には以下のように設定をお願いします。
+```Swift
+let package = Package(
+    name: "SomeProduct",
+    products: [
+        .library(name: "SomeProduct", targets: ["SomeProduct"])
+    ],
+    dependencies: [
+        .package(url: "https://github.com/suffle8422/async-SwiftData.git", exact: "0.1.0")
+    ],
+    targets: [
+        .target(
+            name: "SomeProduct",
+            dependencies: [
+                .product(name: "AsyncSwiftDataCore", package: "async-SwiftData"),
+                .product(name: "AsyncSwiftDataRepository", package: "async-SwiftData")
+            ]
+        )
+    ]
+)
+```
+
+## Useage
 1. `IdentifiableEntityProtocol`を継承したEntityを作成する。
 `PersistentModel`は`Sendable`でないため、`IdentifiableEntityProtocol`を継承した構造体でアクター境界を超えます
 ```Swift
