@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Core
+import AsyncSwiftDataCore
 
 struct TestEntity: IdentifiableEntityProtocol {
     let id: UUID

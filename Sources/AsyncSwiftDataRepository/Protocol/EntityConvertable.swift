@@ -5,7 +5,7 @@
 //  Created by ionishi on 2024/12/15.
 //
 
-import Core
+import AsyncSwiftDataCore
 
 /// PersistentModelと対応するEnitiyと違いに変換可能であることを示すProtocol
 public protocol EntityConvertable {

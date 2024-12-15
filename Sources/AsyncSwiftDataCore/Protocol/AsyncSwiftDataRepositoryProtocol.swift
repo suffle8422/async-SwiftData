@@ -12,7 +12,7 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     associatedtype Entity: IdentifiableEntityProtocol
     associatedtype Model: PersistentModel
 
-    nonisolated var modelContext: ModelContext { get }
+    var modelContext: ModelContext { get }
 
     /// 指定のIDをもつ`Entity`を返す
     /// 見つからない場合にはエラーをスローする

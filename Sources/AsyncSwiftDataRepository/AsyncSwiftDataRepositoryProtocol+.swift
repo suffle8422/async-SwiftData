@@ -7,11 +7,9 @@
 
 import Foundation
 import SwiftData
-import Core
+import AsyncSwiftDataCore
 
 extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
-    nonisolated var modelContext: ModelContext { modelContext }
-
     public func get(id: UUID) async throws -> Entity {
            guard let model = getModel(id: id) else { throw AsyncSwiftDataError.idNotFound }
            return model.makeEntity()

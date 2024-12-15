@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Core
+import AsyncSwiftDataCore
 
 /// SwiftDataで保存さえれるPersitent Modelを示すProtocol
 /// `id`プロパティを持つ`

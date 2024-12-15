@@ -6,7 +6,8 @@
 //
 
 import SwiftData
-import Core
+import AsyncSwiftDataCore
+import AsyncSwiftDataRepository
 
 @ModelActor
 actor TestRepository: AsyncSwiftDataRepositoryProtocol {

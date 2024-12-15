@@ -15,7 +15,7 @@ package.products = [
         targets: [.core]
     ),
     .library(
-        name: "AsyncSwiftDataRepository",
+        name: "AsyncSwiftData",
         targets: [.core, .repository]
     )
 ]
@@ -38,9 +38,9 @@ package.targets = [
 ]
 
 private extension String {
-    static let core = "Core"
-    static let repository = "Repository"
+    static let core = "AsyncSwiftDataCore"
+    static let repository = "AsyncSwiftDataRepository"
 
     // MARK: ForTests
-    static let repositoryTests = "RepositoryTests"
+    static let repositoryTests = "AsyncSwiftDataRepositoryTests"
 }

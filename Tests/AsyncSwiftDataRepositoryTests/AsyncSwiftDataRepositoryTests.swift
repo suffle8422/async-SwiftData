@@ -8,8 +8,8 @@
 import Foundation
 import Testing
 import SwiftData
-import Core
-import Repository
+import AsyncSwiftDataCore
+import AsyncSwiftDataRepository
 
 actor AsyncSwiftDataRepositoryTests {
     let modelContainer: ModelContainer
@@ -28,7 +28,7 @@ actor AsyncSwiftDataRepositoryTests {
         let id = UUID()
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
-        try testRepository.insertModelForTests(model: model)
+        try await testRepository.insertModelForTests(model: model)
         #expect(await testRepository.fetchAll().count == 1)
 
         let targetEntity = try await testRepository.get(id: id)
@@ -41,7 +41,7 @@ actor AsyncSwiftDataRepositoryTests {
     func get_failure() async throws {
         #expect(await testRepository.fetchAll().count == 0)
 
-        await #expect(throws: AsyncSwiftDataRepositoryError.notFoundIDError) {
+        await #expect(throws: AsyncSwiftDataError.idNotFound) {
             try await testRepository.get(id: UUID())
         }
     }
@@ -53,7 +53,7 @@ actor AsyncSwiftDataRepositoryTests {
                 id: UUID(),
                 title: "テストタイトル\(index)"
             )
-            try testRepository.insertModelForTests(model: testModel)
+            try await testRepository.insertModelForTests(model: testModel)
         }
         #expect(await testRepository.fetchAll().count == 10)
     }
@@ -80,7 +80,7 @@ actor AsyncSwiftDataRepositoryTests {
         let id = UUID()
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
-        try testRepository.insertModelForTests(model: model)
+        try await testRepository.insertModelForTests(model: model)
         #expect(await testRepository.fetchAll().count == 1)
 
         let updatedTitle = "テストタイトル2"
@@ -99,17 +99,17 @@ actor AsyncSwiftDataRepositoryTests {
         let id = UUID()
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
-        try testRepository.insertModelForTests(model: model)
+        try await testRepository.insertModelForTests(model: model)
         #expect(await testRepository.fetchAll().count == 1)
 
         try await testRepository.delete(id: id)
         #expect(await testRepository.fetchAll().count == 0)
     }
+
 }
 
 private extension TestRepository {
-    nonisolated func insertModelForTests(model: TestModel) throws {
-        let modelContext = modelExecutor.modelContext
+    func insertModelForTests(model: TestModel) throws {
         modelContext.insert(model)
         try modelContext.save()
     }
