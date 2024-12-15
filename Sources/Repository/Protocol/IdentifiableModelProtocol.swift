@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import Core
 
-/// SwiftDataで保存さえっるPersitent Modelを示すProtocol
+/// SwiftDataで保存さえれるPersitent Modelを示すProtocol
 /// `id`プロパティを持つ`
 public protocol IdentifiableModelProtocol {
+    associatedtype Entity: IdentifiableEntityProtocol
+    
     var id: UUID { get }
 }

@@ -13,14 +13,14 @@ import Repository
 
 actor AsyncSwiftDataRepositoryTests {
     let modelContainer: ModelContainer
-    let testRepository: AsyncSwiftDataRepository<TestModel, TestEntity>
+    let testRepository: TestRepository
 
     init() {
         let schema = Schema([TestModel.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         modelContainer = try! ModelContainer(for: schema, configurations: modelConfiguration)
 
-        testRepository = AsyncSwiftDataRepository<TestModel, TestEntity>(modelContainer: modelContainer)
+        testRepository = TestRepository(modelContainer: modelContainer)
     }
 
     @Test("idに対応するModelが保存されているとき")
@@ -107,7 +107,7 @@ actor AsyncSwiftDataRepositoryTests {
     }
 }
 
-private extension AsyncSwiftDataRepository {
+private extension TestRepository {
     nonisolated func insertModelForTests(model: TestModel) throws {
         let modelContext = modelExecutor.modelContext
         modelContext.insert(model)
