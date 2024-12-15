@@ -35,20 +35,20 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     func delete(id: UUID) async throws
 }
 
-extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
-    public func get(id: UUID) async throws -> Entity {
+public extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
+    func get(id: UUID) async throws -> Entity {
         guard let model = getModel(id: id) else { throw AsyncSwiftDataError.idNotFound }
         return model.makeEntity()
     }
 
-    public func fetchAll() async -> [Entity] {
+    func fetchAll() async -> [Entity] {
         let fetchDescriptor = FetchDescriptor<Model>()
         let models = try? modelContext.fetch(fetchDescriptor)
         guard let models else { return [] }
         return models.map { $0.makeEntity() }
     }
 
-    public func save(entity: Entity) async throws {
+    func save(entity: Entity) async throws {
         guard let model = getModel(id: entity.id) else {
             let model = Model(entity: entity)
             modelContext.insert(model)
@@ -59,7 +59,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
         try saveModelContext()
     }
 
-    public func delete(id: UUID) async throws {
+    func delete(id: UUID) async throws {
         guard let model = getModel(id: id) else {
             throw AsyncSwiftDataError.idNotFound
         }
@@ -67,7 +67,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
         try saveModelContext()
     }
 
-    private func getModel(id: UUID) -> Model? {
+    func getModel(id: UUID) -> Model? {
         let fetchDescriptor = FetchDescriptor<Model>(
             predicate: #Predicate { $0.id == id }
         )
@@ -83,5 +83,4 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
             throw AsyncSwiftDataError.modelContextSaveFailed
         }
     }
-
 }
