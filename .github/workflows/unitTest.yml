@@ -22,7 +22,7 @@ jobs:
 
     # Xcode バージョンの指定
     - name: Select Xcode
-      run : sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
+      run : sudo xcode-select -s '/Applications/Xcode_16.1.app/Contents/Developer'
 
     # ビルド
     - name: Xcode Build
