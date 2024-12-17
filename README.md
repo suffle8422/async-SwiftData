@@ -92,13 +92,13 @@ actor SampleRepository: AsyncSwiftDataRepositoryProtocol {
 
 5. Repositoryを利用してCRUD処理を行う
 Repositoryのインスタンスを作成することで、以下の関数が利用できます
-- get(id: UUID)
+- _get(id: UUID)
   - 特定のIDをもつEntityを返します
   - 見つからない場合には`AsyncSwiftDataError.idNotFound`がスローされます
-- fetchAll()
+- _fetchAll()
     - 保存されているModelの一覧を配列で返します
-- save(entity: Entity)
+- _save(entity: Entity)
     - entityのIDがすでに永続化されていれば内容を更新する
     - 永続化されていなければ、insert処理を実行する
-- delete(id: UUID)
+- _delete(id: UUID)
     - 特定のIDを持つ永続化データを削除する
