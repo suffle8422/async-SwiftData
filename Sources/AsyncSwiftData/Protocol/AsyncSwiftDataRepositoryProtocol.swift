@@ -18,21 +18,21 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     /// 見つからない場合にはエラーをスローする
     /// - parameters:
     ///   - id: 取得対象のidプロパティ
-    func _get(id: UUID, completion: (() -> Void)?) async throws -> Entity
+    func _get(id: UUID) async throws -> Entity
 
     /// 保存されている全ての`Entity`を配列で返す
-    func _fetchAll(completion: (() -> Void)?) async -> [Entity]
+    func _fetchAll() async -> [Entity]
 
     /// `Entity`のIDと同じIDを持つPersistentModelが保存されていなければ、新規保存する
     /// 保存されていれば、内容を更新する
     /// - parameters:
     ///   - entity: 保存もしくは更新するEntity
-    func _save(entity: Entity, completion: (() -> Void)?) async throws
+    func _save(entity: Entity) async throws
 
     /// 指定のIDを持つ`Entity`を削除する
     /// - parameters:
     ///   - id: 削除対象のID
-    func _delete(id: UUID, completion: (() -> Void)?) async throws
+    func _delete(id: UUID) async throws
 }
 
 extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
