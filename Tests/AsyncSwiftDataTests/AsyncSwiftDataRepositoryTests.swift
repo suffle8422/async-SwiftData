@@ -28,9 +28,9 @@ actor AsyncSwiftDataRepositoryTests {
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
         try await testRepository.insertModelForTests(model: model)
-        #expect(await testRepository.fetchAll().count == 1)
+        #expect(await testRepository._fetchAll().count == 1)
 
-        let targetEntity = try await testRepository.get(id: id)
+        let targetEntity = try await testRepository._get(id: id)
 
         #expect(targetEntity.id == id)
         #expect(targetEntity.title == title)
@@ -38,10 +38,10 @@ actor AsyncSwiftDataRepositoryTests {
 
     @Test("idに対応するModelが保存されていないとき")
     func get_failure() async throws {
-        #expect(await testRepository.fetchAll().count == 0)
+        #expect(await testRepository._fetchAll().count == 0)
 
         await #expect(throws: AsyncSwiftDataError.idNotFound) {
-            try await testRepository.get(id: UUID())
+            try await testRepository._get(id: UUID())
         }
     }
 
@@ -54,22 +54,22 @@ actor AsyncSwiftDataRepositoryTests {
             )
             try await testRepository.insertModelForTests(model: testModel)
         }
-        #expect(await testRepository.fetchAll().count == 10)
+        #expect(await testRepository._fetchAll().count == 10)
     }
 
     @Test("新規保存")
     func save_insert() async throws {
-        #expect(await testRepository.fetchAll().count == 0)
+        #expect(await testRepository._fetchAll().count == 0)
 
         let id = UUID()
         let title = "テストタイトル"
         let entity = TestEntity(id: id, title: title)
 
-        try await testRepository.save(entity: entity)
+        try await testRepository._save(entity: entity)
 
-        #expect(await testRepository.fetchAll().count == 1)
+        #expect(await testRepository._fetchAll().count == 1)
 
-        let targetEntity = try await testRepository.get(id: id)
+        let targetEntity = try await testRepository._get(id: id)
         #expect(targetEntity.id == id)
         #expect(targetEntity.title == title)
     }
@@ -80,15 +80,15 @@ actor AsyncSwiftDataRepositoryTests {
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
         try await testRepository.insertModelForTests(model: model)
-        #expect(await testRepository.fetchAll().count == 1)
+        #expect(await testRepository._fetchAll().count == 1)
 
         let updatedTitle = "テストタイトル2"
         let entity = TestEntity(id: id, title: updatedTitle)
-        try await testRepository.save(entity: entity)
+        try await testRepository._save(entity: entity)
 
-        #expect(await testRepository.fetchAll().count == 1)
+        #expect(await testRepository._fetchAll().count == 1)
 
-        let targetEntity = try await testRepository.get(id: id)
+        let targetEntity = try await testRepository._get(id: id)
         #expect(targetEntity.id == id)
         #expect(targetEntity.title == updatedTitle)
     }
@@ -99,10 +99,10 @@ actor AsyncSwiftDataRepositoryTests {
         let title = "テストタイトル"
         let model = TestModel(id: id, title: title)
         try await testRepository.insertModelForTests(model: model)
-        #expect(await testRepository.fetchAll().count == 1)
+        #expect(await testRepository._fetchAll().count == 1)
 
-        try await testRepository.delete(id: id)
-        #expect(await testRepository.fetchAll().count == 0)
+        try await testRepository._delete(id: id)
+        #expect(await testRepository._fetchAll().count == 0)
     }
 
 }

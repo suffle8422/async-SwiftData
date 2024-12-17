@@ -18,40 +18,37 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     /// 見つからない場合にはエラーをスローする
     /// - parameters:
     ///   - id: 取得対象のidプロパティ
-    func get(id: UUID, completion: (() -> Void)?) async throws -> Entity
+    func _get(id: UUID, completion: (() -> Void)?) async throws -> Entity
 
     /// 保存されている全ての`Entity`を配列で返す
-    func fetchAll(completion: (() -> Void)?) async -> [Entity]
+    func _fetchAll(completion: (() -> Void)?) async -> [Entity]
 
     /// `Entity`のIDと同じIDを持つPersistentModelが保存されていなければ、新規保存する
     /// 保存されていれば、内容を更新する
     /// - parameters:
     ///   - entity: 保存もしくは更新するEntity
-    func save(entity: Entity, completion: (() -> Void)?) async throws
+    func _save(entity: Entity, completion: (() -> Void)?) async throws
 
     /// 指定のIDを持つ`Entity`を削除する
     /// - parameters:
     ///   - id: 削除対象のID
-    func delete(id: UUID, completion: (() -> Void)?) async throws
+    func _delete(id: UUID, completion: (() -> Void)?) async throws
 }
 
-public extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
-    func get(id: UUID, completion: (() -> Void)? = nil) async throws -> Entity {
-        defer { completion?() }
+extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
+    public func _get(id: UUID) async throws -> Entity {
         guard let model = getModel(id: id) else { throw AsyncSwiftDataError.idNotFound }
         return model.makeEntity()
     }
 
-    func fetchAll(completion: (() -> Void)? = nil) async -> [Entity] {
-        defer { completion?() }
+    public func _fetchAll() async -> [Entity] {
         let fetchDescriptor = FetchDescriptor<Model>()
         let models = try? modelContext.fetch(fetchDescriptor)
         guard let models else { return [] }
         return models.map { $0.makeEntity() }
     }
 
-    func save(entity: Entity, completion: (() -> Void)? = nil) async throws {
-        defer { completion?() }
+    public func _save(entity: Entity) async throws {
         guard let model = getModel(id: entity.id) else {
             let model = Model(entity: entity)
             modelContext.insert(model)
@@ -62,8 +59,7 @@ public extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, 
         try saveModelContext()
     }
 
-    func delete(id: UUID, completion: (() -> Void)? = nil) async throws {
-        defer { completion?() }
+    public func _delete(id: UUID) async throws {
         guard let model = getModel(id: id) else {
             throw AsyncSwiftDataError.idNotFound
         }
