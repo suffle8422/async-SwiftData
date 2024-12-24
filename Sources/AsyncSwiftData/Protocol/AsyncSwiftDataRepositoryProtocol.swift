@@ -10,7 +10,7 @@ import SwiftData
 
 public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     associatedtype Entity: IdentifiableEntityProtocol
-    associatedtype Model: PersistentModel
+    associatedtype Model: PersistentModel, IdentifiableModelProtocol
 
     var modelContext: ModelContext { get }
 
@@ -68,10 +68,8 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
     }
 
     private func getModel(id: UUID) -> Model? {
-        let fetchDescriptor = FetchDescriptor<Model>(
-            predicate: #Predicate { $0.id == id }
-        )
-        let model = try? modelContext.fetch(fetchDescriptor).first
+        let fetchDescriptor = FetchDescriptor<Model>()
+        let model = try? modelContext.fetch(fetchDescriptor).first(where: { $0.id == id })
         return model
     }
 
