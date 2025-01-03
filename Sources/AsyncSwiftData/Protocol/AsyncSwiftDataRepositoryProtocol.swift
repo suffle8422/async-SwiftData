@@ -23,7 +23,7 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     /// 指定条件で`Entity`を取得する
     /// - parameters:
     ///   - fetchDescriptor: 検索条件
-    func _fetch(fetchDescriptor: FetchDescriptor<Model>) -> [Entity]
+    func _fetch(fetchDescriptor: FetchDescriptor<Model>) async -> [Entity]
 
     /// 保存されている全ての`Entity`を配列で返す
     func _fetchAll() async -> [Entity]
@@ -46,7 +46,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
         return model.makeEntity()
     }
 
-    public func _fetch(fetchDescriptor: FetchDescriptor<Model>) -> [Entity] {
+    public func _fetch(fetchDescriptor: FetchDescriptor<Model>) async -> [Entity] {
         let models = try? modelContext.fetch(fetchDescriptor)
         guard let models else { return [] }
         return models.map { $0.makeEntity() }
