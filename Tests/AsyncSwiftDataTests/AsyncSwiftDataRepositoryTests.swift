@@ -47,7 +47,7 @@ actor AsyncSwiftDataRepositoryTests {
 
     @Test
     func fetch() async throws {
-        for index in 1...3 {
+        for _ in 1...3 {
             let testModel = TestModel(
                 id: UUID(),
                 title: "テストタイトル"
