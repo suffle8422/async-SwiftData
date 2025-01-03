@@ -34,7 +34,6 @@ extension TestModel: EntityConvertable {
     }
     
     func apply(entity: TestEntity) {
-        id = entity.id
         title = entity.title
     }
 }

@@ -10,7 +10,7 @@ import SwiftData
 
 public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     associatedtype Entity: IdentifiableEntityProtocol
-    associatedtype Model: PersistentModel, IdentifiableModelProtocol
+    associatedtype Model: PersistentModel, IdentifiableModelProtocol, EntityConvertable
 
     var modelContext: ModelContext { get }
 
@@ -19,6 +19,11 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     /// - parameters:
     ///   - id: 取得対象のidプロパティ
     func _get(id: UUID) async throws -> Entity
+
+    /// 指定条件で`Entity`を取得する
+    /// - parameters:
+    ///   - fetchDescriptor: 検索条件
+    func _fetch(fetchDescriptor: FetchDescriptor<Model>) -> [Entity]
 
     /// 保存されている全ての`Entity`を配列で返す
     func _fetchAll() async -> [Entity]
@@ -35,10 +40,16 @@ public protocol AsyncSwiftDataRepositoryProtocol: Actor {
     func _delete(id: UUID) async throws
 }
 
-extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: IdentifiableModelProtocol & EntityConvertable {
+extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: PersistentModel & IdentifiableModelProtocol & EntityConvertable {
     public func _get(id: UUID) async throws -> Entity {
         guard let model = getModel(id: id) else { throw AsyncSwiftDataError.idNotFound }
         return model.makeEntity()
+    }
+
+    public func _fetch(fetchDescriptor: FetchDescriptor<Model>) -> [Entity] {
+        let models = try? modelContext.fetch(fetchDescriptor)
+        guard let models else { return [] }
+        return models.map { $0.makeEntity() }
     }
 
     public func _fetchAll() async -> [Entity] {

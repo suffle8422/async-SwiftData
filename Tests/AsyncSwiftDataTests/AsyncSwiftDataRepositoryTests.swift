@@ -46,6 +46,29 @@ actor AsyncSwiftDataRepositoryTests {
     }
 
     @Test
+    func fetch() async throws {
+        for index in 1...3 {
+            let testModel = TestModel(
+                id: UUID(),
+                title: "テストタイトル"
+            )
+            try await testRepository.insertModelForTests(model: testModel)
+        }
+        for index in 4...10 {
+            let testModel = TestModel(
+                id: UUID(),
+                title: "テストタイトル\(index)"
+            )
+            try await testRepository.insertModelForTests(model: testModel)
+        }
+
+        let fetchDescriptor = FetchDescriptor(
+            predicate: #Predicate<TestModel> { $0.title == "テストタイトル" }
+        )
+        #expect(await testRepository._fetch(fetchDescriptor: fetchDescriptor).count == 3)
+    }
+
+    @Test
     func fetchAll() async throws {
         for index in 1...10 {
             let testModel = TestModel(
