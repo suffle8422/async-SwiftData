@@ -85,6 +85,7 @@ extension AsyncSwiftDataRepositoryProtocol where Entity == Model.Entity, Model: 
     }
 
     private func saveModelContext() throws {
+        guard modelContext.hasChanges else { return }
         do {
             try modelContext.save()
             return
