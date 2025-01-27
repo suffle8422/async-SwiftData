@@ -97,6 +97,8 @@ Repositoryのインスタンスを作成することで、以下の関数が利�
   - 見つからない場合には`AsyncSwiftDataError.idNotFound`がスローされます
 - _fetchAll()
     - 保存されているModelの一覧を配列で返します
+- _fetch(fetchDescriptor:)
+    - 保存されているModelに対して、fetchDescriptorを適応してfetchした結果を返します
 - _save(entity: Entity)
     - entityのIDがすでに永続化されていれば内容を更新する
     - 永続化されていなければ、insert処理を実行する
