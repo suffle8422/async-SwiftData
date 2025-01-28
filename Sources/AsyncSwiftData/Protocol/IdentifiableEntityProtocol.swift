@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// アクターを超えるためにPersitent Modelから変換されるEntityを示すProtocol
+/// アクターを超えるためにPersistent Modelから変換されるEntityを示すProtocol
 /// `id`プロパティを持つ`
 /// AsyncSwiftDataとのやり取りには全てこのProtocolに準拠した型でおこなう
 public protocol IdentifiableEntityProtocol: Sendable {

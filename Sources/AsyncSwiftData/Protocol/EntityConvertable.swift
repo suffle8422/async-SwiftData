@@ -5,7 +5,7 @@
 //  Created by ionishi on 2024/12/15.
 //
 
-/// PersistentModelと対応するEnitiyと違いに変換可能であることを示すProtocol
+/// PersistentModelと対応するEntityと違いに変換可能であることを示すProtocol
 public protocol EntityConvertable {
     associatedtype Entity: IdentifiableEntityProtocol
 
