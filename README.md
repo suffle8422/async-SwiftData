@@ -37,6 +37,11 @@ struct SampleEntity: IdentifiableEntityProtocol {
 ```
 
 2. `IdentifiableModelProtocol`と、`EntityConvertable`を継承した`PersistentModel`を作成する
+> [!IMPORTANT]
+> `IdentifiableModelProtocl`の`id`プロパティはプライマリーキーとして利用されるため、一意な値である必要があります。
+> `@Attribute(.unique)`を付与することで、一意性を担保できます。
+> CloudKitとの連携などで、`@Attribute(.unique)`が付与できない場合にも必ず一意性を担保してください。
+> 一意性が保たれない場合、永続化データの取り出しや更新が正常に行われない可能性があります。 
 ```Swift
 final class SampleModel: IdentifiableModelProtocol {
     @Attribute(.unique)
