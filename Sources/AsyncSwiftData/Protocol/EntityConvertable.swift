@@ -5,7 +5,7 @@
 //  Created by ionishi on 2024/12/15.
 //
 
-/// PersistentModelと対応するEntityと違いに変換可能であることを示すProtocol
+/// PersistentModelと対応するEntityと互いに変換可能であることを示すProtocol
 public protocol EntityConvertable {
     associatedtype Entity: IdentifiableEntityProtocol
 
@@ -18,5 +18,7 @@ public protocol EntityConvertable {
     func makeEntity() -> Entity
 
     /// `Entity`と同様のIDを持つPersistentModelの内容を更新する
+    /// - parameters:
+    ///   - entity: PersistentModelの生成に利用する`Entity`
     func apply(entity: Entity)
 }

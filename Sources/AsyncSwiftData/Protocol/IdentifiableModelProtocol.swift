@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// SwiftDataで保存さえれるPersistent Modelを示すProtocol
-/// `id`プロパティを持つ`
+/// SwiftDataで保存れるPersistent Modelを示すProtocol
+/// `id`プロパティはプライマリーキーの役割を果たすため一意な値を取るようにする
 public protocol IdentifiableModelProtocol {
     associatedtype Entity: IdentifiableEntityProtocol
     
