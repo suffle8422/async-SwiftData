@@ -10,7 +10,8 @@ import Testing
 import SwiftData
 import AsyncSwiftData
 
-actor AsyncSwiftDataRepositoryTests {
+@MainActor
+final class AsyncSwiftDataRepositoryTests {
     let modelContainer: ModelContainer
     let testRepository: TestRepository
 
@@ -41,7 +42,7 @@ actor AsyncSwiftDataRepositoryTests {
         #expect(await testRepository._fetchAll().count == 0)
 
         await #expect(throws: AsyncSwiftDataError.idNotFound) {
-            try await testRepository._get(id: UUID())
+            try await self.testRepository._get(id: UUID())
         }
     }
 
@@ -127,7 +128,6 @@ actor AsyncSwiftDataRepositoryTests {
         try await testRepository._delete(id: id)
         #expect(await testRepository._fetchAll().count == 0)
     }
-
 }
 
 private extension TestRepository {
